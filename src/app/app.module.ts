@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TasksModule } from './tasks/tasks.module';
 import { NotificationsModule } from './notifications/notifications.module';
-import { MatIconModule } from '@angular/material/icon';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserAnimationsModule,
     TasksModule,
     NotificationsModule,
-    MatIconModule
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

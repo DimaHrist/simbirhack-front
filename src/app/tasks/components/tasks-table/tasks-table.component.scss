@@ -1,0 +1,44 @@
+@import "../../../../styles/colors";
+
+.table-container {
+  height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+tr:hover {
+  background-color: rgba(0,0,0,.04);
+}
+
+th, td {
+  overflow: hidden;
+  width:auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+  .publication-date-column,
+  .quantity-column {
+    width: 120px;
+  }
+
+  .task-column {
+    width: 800px;
+  }
+
+  .theme-column {
+    width: 200px;
+  }
+
+  .actions-column {
+    width: 60px;
+  }
+
+  .actions-icon {
+    cursor: pointer;
+    color: $main-blue;
+  }

@@ -1,4 +1,32 @@
 :host {
   height: 100%;
   padding: 24px;
+  overflow: auto;
+}
+
+.tasks-view-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &__buttons {
+    button {
+      margin-left: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .tasks-view-header {
+    flex-direction: column;
+
+    &__buttons {
+      align-self: flex-end;
+      margin-bottom: 8px;
+    }
+  }
+
+  h1 {
+    margin-bottom: 8px;
+  }
 }

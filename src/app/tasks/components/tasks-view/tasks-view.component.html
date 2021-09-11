@@ -1,1 +1,32 @@
-<p>tasks-view works!</p>
+<div class="tasks-view-header">
+  <h1>
+    Список заданий
+  </h1>
+  <div class="tasks-view-header__buttons">
+    <button mat-button class=""
+            color="primary"
+            (click)="accordion.closeAll()">
+      Свернуть все
+    </button>
+    <button mat-flat-button
+            color="primary"
+            (click)="accordion.openAll()">
+      Развернуть все
+    </button>
+  </div>
+</div>
+
+<mat-accordion #accordion="matAccordion" [multi]="true">
+  <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false"
+                       *ngFor="let level of levels">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{level}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-tasks-table [displayedColumns]="displayedColumns"
+               [dataSource]="dataSource">
+    </app-tasks-table>
+  </mat-expansion-panel>
+</mat-accordion>
