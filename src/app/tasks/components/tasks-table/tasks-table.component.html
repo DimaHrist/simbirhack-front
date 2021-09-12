@@ -1,4 +1,4 @@
-<div class="table-container mat-elevation-z8" *ngIf="dataSource.length">
+<div class="table-container mat-elevation-z8" *ngIf="dataSource?.length">
   <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="publicationDate">
@@ -6,7 +6,7 @@
           class="publication-date-column">
         Дата публикации
       </th>
-      <td mat-cell *matCellDef="let element"> {{element.publicationDate}} </td>
+      <td mat-cell *matCellDef="let element"> 12.09.2021 4:07 </td>
     </ng-container>
 
     <ng-container matColumnDef="task">
@@ -14,7 +14,7 @@
           class="task-column">
         Задание
       </th>
-      <td mat-cell *matCellDef="let element"> {{element.task}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.text}} </td>
     </ng-container>
 
     <ng-container matColumnDef="theme">
@@ -22,7 +22,7 @@
           class="theme-column">
         Тема
       </th>
-      <td mat-cell *matCellDef="let element"> {{element.theme}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
 
     <ng-container matColumnDef="questionsQuantity">
@@ -30,7 +30,7 @@
           class="quantity-column">
         Кол-во вопросов
       </th>
-      <td mat-cell *matCellDef="let element"> {{element.questionsQuantity}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.questions?.length}} </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
@@ -41,12 +41,12 @@
       <td mat-cell *matCellDef="let element">
         <mat-icon aria-hidden="false"
                   class="actions-icon"
-                  routerLink="/notifications">
+                  (click)="editTaskEvent.emit($event)">
           edit_note
         </mat-icon>
         <mat-icon aria-hidden="false"
                   class="actions-icon"
-                  routerLink="/notifications">
+                  (click)="deleteTaskEvent.emit(element.id)">
           delete_outline
         </mat-icon>
       </td>

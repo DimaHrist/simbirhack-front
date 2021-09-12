@@ -1,15 +1,20 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
+import { TasksApiService } from '../../services/tasks-api.service';
+import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AddOrEditTaskDialogComponent } from '../add-or-edit-task.dialog/add-or-edit-task.dialog.component';
 
 @Component({
   selector: 'app-tasks-view',
   templateUrl: './tasks-view.component.html',
   styleUrls: ['./tasks-view.component.scss']
 })
-export class TasksViewComponent implements OnInit {
+export class TasksViewComponent implements OnInit, OnDestroy {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   public panelOpenState = false;
+  public subscriptions = new Subscription();
 
   public displayedColumns = [
     'publicationDate',
@@ -19,18 +24,15 @@ export class TasksViewComponent implements OnInit {
     'actions'
   ];
 
-  public dataSource = [
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, London is the capital of Great Britain,its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 5},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 8},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 7},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 11},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 7},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 12},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 6},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 5},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 14},
-    {publicationDate: '11.09.2021 17:08', task: 'London is the capital of Great Britain, its political, economic and cultural centre. Its one of the largest cities in the world.', theme: 'Task', questionsQuantity: 5},
-  ];
+  public test = {
+    beginner: [],
+    elementary: [],
+    preIntermediate: [],
+    intermediate: [],
+    upperIntermediate: [],
+    advanced: []
+  };
+
   public levels = [
     'Beginner',
     'Elementary',
@@ -40,9 +42,60 @@ export class TasksViewComponent implements OnInit {
     'Advanced'
   ];
 
-  constructor() {
+  constructor(
+    private readonly tasksApiService: TasksApiService,
+    private readonly diaolog: MatDialog
+  ) {
   }
 
-  ngOnInit(): void { }
+  public getTasks(): void {
+    this.tasksApiService.getTasks()
+      .subscribe((tasks) => {
+        tasks.reduce((acc, t) => {
+          acc[t.level.toLowerCase()].push(t);
+          return acc;
+        }, this.test);
+      });
+  }
+
+  public addTask(request): void {
+    this.tasksApiService.addTask(request)
+      .subscribe(() => this.getTasks());
+  }
+
+  public editTask(event): void {
+    this.openDialog(null, event);
+    // this.tasksApiService.editTask().subscribe();
+  }
+
+  public deleteTask(id): void {
+    this.tasksApiService.deleteTask(id).subscribe();
+  }
+
+  public openDialog(lev?, data?): void {
+    this.subscriptions.add(
+      this.diaolog.open(AddOrEditTaskDialogComponent, {
+        width: '500px',
+        height: '700px',
+        data: {
+          level: lev,
+          task: data,
+        }
+      }).afterClosed()
+        .subscribe((request) => {
+          if (request) {
+            this.addTask(request);
+          }
+        })
+    );
+  }
+
+  public ngOnInit(): void {
+    this.getTasks();
+  }
+
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
 }

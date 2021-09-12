@@ -24,9 +24,17 @@
       <mat-panel-title>
         {{level}}
       </mat-panel-title>
+      <mat-panel-description class="add-button">
+        <button mat-button color="primary"
+        (click)="openDialog(level); $event.stopPropagation()">
+          Добавить
+        </button>
+      </mat-panel-description>
     </mat-expansion-panel-header>
     <app-tasks-table [displayedColumns]="displayedColumns"
-               [dataSource]="dataSource">
+                     [dataSource]="test[level.toLowerCase()]"
+                     (deleteTaskEvent)="deleteTask($event)"
+                     (editTaskEvent)="editTask($event)">
     </app-tasks-table>
   </mat-expansion-panel>
 </mat-accordion>

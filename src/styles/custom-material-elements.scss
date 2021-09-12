@@ -1,13 +1,18 @@
 @import "colors";
 
 .mat-flat-button.mat-primary {
-  background-color: $main-blue !important;
+  background-color: $main-blue;
   font-weight: 400;
 }
 
 .mat-button.mat-primary {
   color: $main-blue;
   font-weight: 400;
+}
+
+button:disabled,
+.mat-button.mat-primary:disabled {
+  background-color: $light-gray;
 }
 
 mat-cell:nth-child(1),
@@ -18,4 +23,17 @@ mat-header-cell:nth-child(1) {
 mat-cell:nth-child(5),
 mat-header-cell:nth-child(5) {
   flex: 0 0 10%;
+}
+
+.mat-expansion-panel-header-title {
+  align-items: center;
+}
+
+.mat-radio-button.mat-accent.mat-radio-checked,
+.mat-radio-outer-circle {
+  border-color: $main-blue !important;
+}
+
+.mat-radio-inner-circle {
+  background-color: $main-blue !important;
 }

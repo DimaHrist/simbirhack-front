@@ -1,0 +1,70 @@
+<div class="add-task-header">
+  <h1>{{data.task ? 'Редактировать задание' : 'Добавить задание'}}</h1>
+  <button aria-hidden="true" mat-dialog-close class="close-button" type="button">×</button>
+</div>
+<div class="add-task-body"
+     [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-label>Задание*</mat-label>
+    <textarea matInput formControlName="task"></textarea>
+    <mat-error>Обязательное поле, минимум 100 символов.</mat-error>
+  </mat-form-field>
+
+  <ng-container formArrayName="questions">
+    <div class="add-task-body__questions"
+         *ngFor="let question of $any(form.get('questions')).controls, let i = index">
+
+      <ng-container [formGroupName]="i">
+        <mat-form-field class="example-full-width" appearance="fill">
+          <mat-label>Вопрос №{{i + 1}}</mat-label>
+          <input matInput formControlName="question">
+        </mat-form-field>
+
+        <label id="radio-group-label"></label>
+        <ng-container formGroupName="answers">
+          <mat-radio-group
+            formControlName="right"
+            aria-labelledby="radio-group-label"
+            class="radio-group">
+
+            <div *ngFor="let radio of [1, 2, 3, 4], let index = index"
+                 class="radio-group__row">
+              <mat-radio-button class="radio-button"
+                                [value]="options[index]">
+              </mat-radio-button>
+              <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Вариант {{options[index]}}</mat-label>
+                <input matInput [formControlName]="'option'+(index+1)">
+              </mat-form-field>
+            </div>
+          </mat-radio-group>
+        </ng-container>
+        <hr>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <div class="add-question-button">
+    <button mat-mini-fab
+            color="primary"
+            (click)="addQuestion()"
+            [disabled]="$any(form.get('questions')).controls.length === 15">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+</div>
+
+<div class="add-task__footer">
+  <button mat-button class=""
+          color="primary"
+          (click)="dialogRef.close()">
+    Отмена
+  </button>
+  <button mat-flat-button
+          color="primary"
+          (click)="saveTask()"
+          [disabled]="form.invalid">
+    {{data.task ? 'Редактировать' : 'Добавить'}}
+  </button>
+</div>
