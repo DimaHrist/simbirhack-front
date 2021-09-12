@@ -6,16 +6,47 @@
      [formGroup]="form">
   <mat-form-field appearance="fill">
     <mat-label>Задание*</mat-label>
-    <textarea matInput formControlName="task"></textarea>
-    <mat-error>Обязательное поле, минимум 100 символов.</mat-error>
+    <textarea matInput
+              formControlName="task"
+              cdkTextareaAutosize>
+    </textarea>
+    <mat-error>Обязательное поле, минимум 5 символов.</mat-error>
   </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Тема</mat-label>
+    <input matInput formControlName="topic">
+  </mat-form-field>
+
+  <div class="add-task-body__file-input">
+    <div class="file-input__row">
+      <div class="file-wrapper">
+        <span class="input-name">
+          Прикрепить файл
+        </span>
+        <input type="file"
+               accept="image/png, image/jpeg, audio/mp3"
+               formControlName="file"
+               class="file"
+               (change)="fileChange($event)">
+      </div>
+      <div class="file-name">
+        <span>
+          {{fileName}}
+        </span>
+      </div>
+    </div>
+    <p>Поддерживаемые форматы: jpeg, png, mp3</p>
+  </div>
+
+  <hr>
 
   <ng-container formArrayName="questions">
     <div class="add-task-body__questions"
          *ngFor="let question of $any(form.get('questions')).controls, let i = index">
 
       <ng-container [formGroupName]="i">
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field appearance="fill">
           <mat-label>Вопрос №{{i + 1}}</mat-label>
           <input matInput formControlName="question">
         </mat-form-field>
@@ -32,7 +63,7 @@
               <mat-radio-button class="radio-button"
                                 [value]="options[index]">
               </mat-radio-button>
-              <mat-form-field class="example-full-width" appearance="fill">
+              <mat-form-field appearance="fill">
                 <mat-label>Вариант {{options[index]}}</mat-label>
                 <input matInput [formControlName]="'option'+(index+1)">
               </mat-form-field>
