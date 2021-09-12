@@ -1,0 +1,90 @@
+@import "src/styles/colors";
+
+:host {
+  overflow: auto;
+}
+
+.add-task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #DEE2E7;
+  position: relative;
+}
+
+h1 {
+  margin-bottom: 8px;
+}
+
+.close-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.add-task-body {
+  width: 100%;
+  margin-top: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  mat-radio-button {
+    margin-bottom: 16px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    height: 50px;
+  }
+
+ .mat-form-field {
+   transform: translateY(0em) scale(.75) !important;
+   position: absolute;
+   left: -20px;
+  }
+}
+
+hr {
+  margin-bottom: 24px;
+  border: 1px solid $main-blue;
+}
+
+hr:last-child {
+  margin: 16px 0 24px 0;
+}
+
+.add-question-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+
+  button {
+    background-color: $main-blue;
+    position: absolute;
+    top: -45px;
+  }
+
+  button:disabled {
+    background-color: $light-gray;
+  }
+}
+
+.add-task__footer {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 8px;
+  }
+}
