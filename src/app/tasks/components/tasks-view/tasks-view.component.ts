@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { TasksApiService } from '../../services/tasks-api.service';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,8 @@ import { AddOrEditTaskDialogComponent } from '../add-or-edit-task.dialog/add-or-
 @Component({
   selector: 'app-tasks-view',
   templateUrl: './tasks-view.component.html',
-  styleUrls: ['./tasks-view.component.scss']
+  styleUrls: ['./tasks-view.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TasksViewComponent implements OnInit, OnDestroy {
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -24,7 +25,7 @@ export class TasksViewComponent implements OnInit, OnDestroy {
     'actions'
   ];
 
-  public test = {
+  public levelsArr = {
     beginner: [],
     elementary: [],
     preIntermediate: [],
@@ -34,48 +35,70 @@ export class TasksViewComponent implements OnInit, OnDestroy {
   };
 
   public levels = [
-    'Beginner',
-    'Elementary',
-    'Pre Intermediate',
-    'Intermediate',
-    'Upper intermediate',
-    'Advanced'
+    {
+      title: 'Beginner',
+      value: 'beginner'
+    },
+    {
+      title: 'Elementary',
+      value: 'elementary'
+    },
+    {
+      title: 'Pre Intermediate',
+      value: 'preIntermediate'
+    },
+    {
+      title: 'Intermediate',
+      value: 'intermediate'
+    },
+    {
+      title: 'Upper intermediate',
+      value: 'upperIntermediate'
+    },
+    {
+      title: 'Advanced',
+      value: 'advanced'
+    }
   ];
 
   constructor(
     private readonly tasksApiService: TasksApiService,
-    private readonly diaolog: MatDialog
+    private readonly diaolog: MatDialog,
+    private readonly ref: ChangeDetectorRef
   ) {
   }
 
   public getTasks(): void {
     this.tasksApiService.getTasks()
       .subscribe((tasks) => {
-        tasks.reduce((acc, t) => {
-          acc[t.level.toLowerCase()].push(t);
+        this.levelsArr = tasks.reduce((acc, t) => {
+          acc[t.level] = acc[t.level] || [];
+          acc[t.level].push(t);
           return acc;
-        }, this.test);
+        }, {});
+        this.ref.detectChanges();
       });
   }
 
-  public addTask(request): void {
+  public saveTask(request): void {
     this.tasksApiService.addTask(request)
       .subscribe(() => this.getTasks());
   }
 
   public editTask(event): void {
     this.openDialog(null, event);
-    // this.tasksApiService.editTask().subscribe();
   }
 
   public deleteTask(id): void {
-    this.tasksApiService.deleteTask(id).subscribe();
+    this.tasksApiService.deleteTask(id).subscribe(() => {
+      this.getTasks();
+    });
   }
 
   public openDialog(lev?, data?): void {
     this.subscriptions.add(
       this.diaolog.open(AddOrEditTaskDialogComponent, {
-        width: '500px',
+        width: '600px',
         height: '700px',
         data: {
           level: lev,
@@ -83,8 +106,10 @@ export class TasksViewComponent implements OnInit, OnDestroy {
         }
       }).afterClosed()
         .subscribe((request) => {
-          if (request) {
-            this.addTask(request);
+          if (request && request.id) {
+            this.saveTask(request);
+          } else if (request) {
+            this.saveTask(request);
           }
         })
     );
