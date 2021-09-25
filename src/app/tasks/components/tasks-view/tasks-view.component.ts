@@ -69,15 +69,15 @@ export class TasksViewComponent implements OnInit, OnDestroy {
   }
 
   public getTasks(): void {
-    // this.tasksApiService.getTasks()
-    //   .subscribe((tasks) => {
-    //     this.levelsArr = tasks.reduce((acc, t) => {
-    //       acc[t.level] = acc[t.level] || [];
-    //       acc[t.level].push(t);
-    //       return acc;
-    //     }, {});
-    //     this.ref.detectChanges();
-    //   });
+    this.tasksApiService.getTasks()
+      .subscribe((tasks) => {
+        this.levelsArr = tasks.reduce((acc, t) => {
+          acc[t.level] = acc[t.level] || [];
+          acc[t.level].push(t);
+          return acc;
+        }, {});
+        this.ref.detectChanges();
+      });
   }
 
   public saveTask(request): void {
