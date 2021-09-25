@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-notifications',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor() { }
+  public search = new FormControl(null);
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

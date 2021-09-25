@@ -31,6 +31,8 @@ const materialModules = [
   ],
   exports: [
     ...materialModules,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule {

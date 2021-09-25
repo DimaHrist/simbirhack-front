@@ -1,4 +1,40 @@
+@import "src/styles/colors";
+
 :host {
   height: 100%;
   padding: 24px;
+}
+
+.notifications-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search {
+  width: 300px;
+  margin-left: 24px;
+
+  mat-icon {
+    font-size: 18px;
+    color: $main-blue;
+  }
+}
+
+.clear-icon {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 680px) {
+  .notifications-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  h1 {
+    margin-bottom: 0;
+  }
+  .search {
+    margin-left: 0;
+    width: 100%;
+  }
 }

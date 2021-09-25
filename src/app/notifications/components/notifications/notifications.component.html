@@ -1,1 +1,24 @@
-<p>notifications works!</p>
+<div class="notifications-header">
+  <h1>Обращения пользователей</h1>
+  <mat-form-field appearance="legacy"
+                  class="search">
+    <mat-label>Поиск</mat-label>
+    <input matInput
+           autocomplete="false"
+           [formControl]="search">
+    <mat-icon matSuffix
+              *ngIf="!search.value">
+      search
+    </mat-icon>
+    <mat-icon matSuffix
+              *ngIf="search.value"
+              (click)="search.setValue(null)"
+              class="clear-icon">
+      clear
+    </mat-icon>
+  </mat-form-field>
+</div>
+
+<div class="notifications">
+  <app-notification-item *ngFor="let item of [1,2,3,5]"></app-notification-item>
+</div>
