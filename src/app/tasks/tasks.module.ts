@@ -7,7 +7,7 @@ import { TasksTableComponent } from './components/tasks-table/tasks-table.compon
 import { TasksApiService } from './services/tasks-api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AddOrEditTaskDialogComponent } from './components/add-or-edit-task.dialog/add-or-edit-task.dialog.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TasksRoutingModule,
     SharedModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     TasksApiService,

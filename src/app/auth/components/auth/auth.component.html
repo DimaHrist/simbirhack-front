@@ -1,0 +1,54 @@
+<div class="left-wrapper">
+  <div class="left-wrapper__header"></div>
+  <div class="title">
+    <img src="assets/images/ss-logo-text-%20white.svg"
+         class="logo">
+    <h1>{{'english bot' | uppercase}}</h1>
+  </div>
+  <div class="left-wrapper__footer"></div>
+</div>
+
+<div class="right-wrapper">
+  <form class="auth-form"
+        [formGroup]="form"
+        (submit)="onFormSubmit()">
+    <h1>Вход</h1>
+
+    <mat-form-field appearance="legacy">
+      <mat-label>Имя пользователя*</mat-label>
+      <input matInput formControlName="login" autocomplete="false">
+      <mat-error>Обязательное поле</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="legacy">
+      <mat-label>Пароль*</mat-label>
+      <input matInput formControlName="password"
+             [type]="isPasswordVisible ? 'text' : 'password'">
+      <mat-icon matSuffix
+                class="password-visibility-icon"
+                *ngIf="isPasswordVisible"
+                (click)="isPasswordVisible = !isPasswordVisible">
+        visibility
+      </mat-icon>
+      <mat-icon matSuffix
+                class="password-visibility-icon"
+                *ngIf="!isPasswordVisible"
+                (click)="isPasswordVisible = !isPasswordVisible">
+        visibility_off
+      </mat-icon>
+      <mat-error>Обязательное поле</mat-error>
+    </mat-form-field>
+
+    <div class="auth-form__buttons">
+      <button mat-flat-button
+              type="submit"
+              color="primary"
+              [disabled]="form.invalid">
+        Войти
+      </button>
+    </div>
+  </form>
+
+</div>
+
+

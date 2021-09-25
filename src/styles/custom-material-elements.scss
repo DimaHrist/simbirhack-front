@@ -37,3 +37,16 @@ mat-header-cell:nth-child(5) {
 .mat-radio-inner-circle {
   background-color: $main-blue !important;
 }
+
+
+.mat-input-element {
+  caret-color: $main-blue;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: $main-blue;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: $main-blue;
+}

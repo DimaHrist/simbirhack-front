@@ -1,0 +1,73 @@
+@import "src/styles/colors";
+
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.logo {
+  width: 240px;
+}
+
+.title {
+  h1 {
+    color: $white;
+    font-size: 64px;
+    font-weight: 300;
+    opacity: .5;
+  }
+}
+
+.left-wrapper,
+.right-wrapper {
+  height: 100%;
+  width: 50%;
+  display: flex;
+}
+
+.left-wrapper {
+  background-color: $main-blue;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  color: $white;
+}
+
+.right-wrapper {
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  height: 400px;
+  width: 300px;
+  padding: 24px;
+  box-sizing: border-box;
+  background-color: $white;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.password-visibility-icon {
+  cursor: pointer;
+  color: $main-blue;
+}
+
+@media screen and (max-width: 890px) {
+  .title {
+    h1 {
+      font-size: 44px;
+    }
+  }
+}

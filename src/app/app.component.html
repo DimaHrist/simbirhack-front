@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" *ngIf="authService.currentUser() | async">
   <div class="header__logo-container">
     <img src="assets/images/ss-logo-text-%20white.svg"
          alt=""
@@ -8,11 +8,19 @@
     <p>ENGLISH BOT</p>
   </div>
 
-<!--  TODO: раскомментить, когда добавится функционал уведомлений-->
-<!--  <mat-icon aria-hidden="false"-->
-<!--                         class="header__notifications-icon"-->
-<!--                         routerLink="/notifications">-->
-<!--  chat-->
-<!--</mat-icon>-->
+  <div class="header__icons-container">
+    <!--  TODO: раскомментить, когда добавится функционал уведомлений-->
+    <mat-icon aria-hidden="false"
+              class="header__notifications-icon"
+              routerLink="/notifications">
+      mail_outline
+    </mat-icon>
+    <mat-icon aria-hidden="false"
+              class="header__notifications-icon"
+              routerLink="/login"
+              (click)="authService.logout()">
+      logout
+    </mat-icon>
+  </div>
 </div>
 <router-outlet></router-outlet>

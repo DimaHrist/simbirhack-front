@@ -41,4 +41,10 @@
     color: $white;
     cursor: pointer;
   }
+
+  &__icons-container {
+    mat-icon {
+      margin-left: 8px;
+    }
+  }
 }
